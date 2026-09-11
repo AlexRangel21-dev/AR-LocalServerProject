@@ -11,3 +11,4 @@ env/
 app/database/database.db
 *.db
 *.sqlite3
+*.db-journal
