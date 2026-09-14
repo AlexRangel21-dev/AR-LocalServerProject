@@ -3,9 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 
 from database.database import Base, engine
-import models  
+import models  # noqa: F401
 from routers.health import router as health_router
 from routers.auth import router as auth_router
+from routers.equipments import router as equipments_router
 
 app = FastAPI(
     title="Tools API",
@@ -26,3 +27,5 @@ app.add_middleware(
 
 app.include_router(health_router)
 app.include_router(auth_router)
+app.include_router(equipments_router)
+
