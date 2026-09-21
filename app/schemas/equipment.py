@@ -1,42 +1,18 @@
 from pydantic import BaseModel
-
-
-class CategoriaOut(BaseModel):
-    id_category: int
-    name: str | None = None
-
-    class Config:
-        from_attributes = True
-
-
-class TipoOut(BaseModel):
-    id_type: int
-    name: str | None = None
-
-    class Config:
-        from_attributes = True
-
-class ManufacturerOut(BaseModel):
-    id_manufacturer : int 
-    manufacturer: str | None = None
-
-    class Config:
-        from_attributes = True
+from datetime import datetime
 
 
 class EquipoOut(BaseModel):
-    equipment_name: str
-    categoria: CategoriaOut | None = None
-    tipo: TipoOut | None = None
-    status: str
-    use: bool
+    display_name: str
     description: str | None = None
-    parent_equipment: str | None = None
-    model : str | None = None
-    serial_number : str | None = None
-    asset_number : str | None = None
-    next_calibration : str | None = None
-    manufacturer : ManufacturerOut | None = None
+    equipment_category: str | None = None
+    equipment_type: str | None = None
+    last_calibration: datetime | None = None
+    manufacturer: str | None = None
+    model: str | None = None
+    next_calibration: datetime | None = None
+    parent: str | None = None
+    serial_number: str | None = None
 
     class Config:
         from_attributes = True
