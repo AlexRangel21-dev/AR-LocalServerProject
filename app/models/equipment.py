@@ -1,28 +1,17 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
-from sqlalchemy.orm import relationship
-from database.database import Base
-
-from models.manufacturer import Manufacturer
+from sqlalchemy import Column, String, DateTime
+from database.mysql_database import MySQLBase
 
 
-class Equipo(Base):
-    __tablename__ = "Equipments"
+class Equipo(MySQLBase):
+    __tablename__ = "Equipment"
 
-    equipment_name = Column(String, primary_key=True)
-    id_category = Column(Integer, ForeignKey("Equipment_Category.id_category"))
-    id_type = Column(Integer, ForeignKey("Equipment_type.id_type"))
-    status = Column(String, nullable=False, server_default="Active")
-    use = Column(Boolean, server_default="False")
-    description = Column(String)
-    parent_equipment = Column(String, ForeignKey("Equipments.equipment_name"))
-    model = Column(String)
-    serial_number = Column(String)
-    asset_number = Column(String)
-    next_calibration = Column(String)
-    id_manufacturer = Column(Integer, ForeignKey("Manufacturer.id_manufacturer"))
-
-
-
-    categoria = relationship("Categoria")
-    tipo = relationship("Tipo")
-    manufacturer = relationship("Manufacturer")
+    display_name = Column("Display Name", String(255), primary_key=True)
+    description = Column("Description", String(255), nullable=True)
+    equipment_category = Column("Equipment category", String(255), nullable=True)
+    equipment_type = Column("Equipment Type", String(255), nullable=True)
+    last_calibration = Column("Last Calibration", DateTime, nullable=True)
+    manufacturer = Column("Manufacturer", String(255), nullable=True)
+    model = Column("Model", String(255), nullable=True)
+    next_calibration = Column("Next Calibration", DateTime, nullable=True)
+    parent = Column("Parent", String(255), nullable=True)
+    serial_number = Column("Serial Number", String(255), nullable=True)
