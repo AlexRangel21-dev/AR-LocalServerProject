@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from typing import List
 
 from database.deps import get_mysql_db
@@ -14,7 +15,11 @@ router = APIRouter(
 
 @router.get("/{parent}/children", response_model=List[EquipoOut])
 def get_children(parent: str, db: Session = Depends(get_mysql_db)):
-    padre = db.query(Equipo).filter(Equipo.display_name == parent).first()
+    parent_clean = parent.strip()
+
+    padre = db.query(Equipo).filter(
+        func.trim(Equipo.parent) == parent_clean
+    ).first()
 
     if not padre:
         raise HTTPException(
@@ -23,7 +28,7 @@ def get_children(parent: str, db: Session = Depends(get_mysql_db)):
         )
 
     hijos = db.query(Equipo).filter(
-        Equipo.parent == parent
+        func.trim(Equipo.parent) == parent_clean
     ).all()
 
     return hijos
